@@ -1,0 +1,201 @@
+import java.util.*;
+import java.io.*;
+class railwaydisplay extends date
+{
+int row,col;
+public void display()throws IOException
+{
+Calendar c=Calendar.getInstance();
+BufferedReader r=new BufferedReader(new InputStreamReader(System.in));
+railway ob=new railway();
+for(;;)
+{
+displ();
+ob.input();
+railrev ob1=new railrev();
+System.out.println("SEE THE VACANT POSITION AND THEN BOOK THE BERTH");
+ob1.disp();
+System.out.println("\nEnter ROW NO.OF BERTH:- ");
+row=Integer.parseInt(r.readLine());
+System.out.println("AND COLUMN NO. OF BERTH.:-");
+col=Integer.parseInt(r.readLine());
+ob1.check(row,col);
+System.out.println("\f");
+System.out.println("_________________________________________________________________");
+System.out.println("NAME "+" "+" AGE "+" "+" GENDER");
+for(int i=0;i<6;i++)
+{
+System.out.println(ob.name[i]+" "+ob.age[i]+" "+ob.gen[i]+" ");
+}
+
+System.out.println("_________________________________________________________________");
+System.out.println("Train name: "+ ob.train);
+
+System.out.println("date of journey :"+ dd+"/"+mm+"/"+yy);
+System.out.println("Departure from:"+ob.ss);
+System.out.println("Destination :"+ob.ds);
+System.out.println("coach no."+ob.code);
+System.out.println("=================================================================");
+System.out.println("Today is:-"+c.get(Calendar.DATE)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.YEAR));
+
+System.out.println(" HAVE A HAPPY JOURNEY ");
+System.out.println("_________________________________________________________________");
+System.out.println("Do you want to continue(y/n)?");
+String ch=(r.readLine());
+if(ch.equalsIgnoreCase("n"))
+break;
+else
+ob1.disp();
+}
+}
+}
+class railrev
+{
+int b[][]=new int[10][5];
+public railrev()
+{
+for(int r=0;r<10;r++)
+{
+for(int c=0;c<5;c++)
+{
+b[r][c]=0;
+}
+}
+}
+
+public void disp()
+{
+System.out.println("*********************Seats vacant=0: Seats reserved=1**************");
+System.out.println("*********************~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~**************");
+for(int r=0;r<10;r++)
+{
+for(int c=0;c<5;c++)
+{
+System.out.print(" "+b[r][c]+" ");
+}
+System.out.println();
+}
+}
+public void check(int r,int c)
+{
+boolean flag=false;
+r=r-1;
+c=c-1;
+if(r<0||r>=10||c<0||c>=5)
+{
+System.out.println("Sorry........................There are only 10 rows and 5 columns");
+}
+else if(b[r][c]==0)
+{
+b[r][c]=1;
+System.out.println(" Requested Confirmed......Wish you a Well Journey ");
+disp();
+}
+else if(b[r][c]==1)
+{
+for(int j=0;j<5;j++)
+{
+if(b[r][j]==0)
+{
+b[r][j]=1;
+System.out.println("You have been given an alternative seat.Your seat number is at row= "+(r+1)+" and column= "+(j+1));
+flag=true;
+break;
+}
+}
+if(flag==false) System.out.println("Sorry no seat is vacant in this row please select another row");
+disp();
+}
+}
+}
+
+import java.io.*;
+class railway
+{
+String name[]=new String[6];
+String age[]=new String[6];
+String gen[]=new String[6];
+
+String train;
+String dj,ds,ss,code;
+public void input()throws IOException
+{
+BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+System.out.println("Enter train name :-");
+train=br.readLine();
+System.out.println("Enter coach no.:-");
+code=br.readLine();
+
+System.out.println("Enter max. Six persons name:-");
+for(int i=0;i<6;i++)
+{
+System.out.print("person name: "+(i+1)+")");
+name[i]=br.readLine();
+}
+System.out.println("Enter Age:-");
+for(int i=0;i<6;i++)
+{
+System.out.print("age: "+(i+1)+")");
+age[i]=br.readLine();
+}
+System.out.println("Enter Gender:-");
+for(int i=0;i<6;i++)
+{
+System.out.print("person: "+(i+1)+")");
+gen[i]=br.readLine();
+
+}
+System.out.println("Enter start station:-");
+ss=br.readLine();
+
+System.out.println("Enter destination station:-");
+ds=br.readLine();
+//System.out.println("Enter date of journey:-");
+//dj=br.readLine();
+}
+}
+
+import java.util.Calendar;
+import java.util.Date;
+import java.io.*;
+public class date
+{
+int yy,mm,dd;
+
+boolean f;
+public void displ()throws IOException
+{
+Calendar c=Calendar.getInstance();
+BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
+for(;;)
+{
+System.out.println("Enter year:-");
+yy=Integer.parseInt(br.readLine());
+System.out.println("Enter month:-");
+mm=Integer.parseInt(br.readLine());
+System.out.println("Enter day:-");
+dd=Integer.parseInt(br.readLine());
+System.out.println("Today is:-"+c.get(Calendar.DATE)+"/"+(c.get(Calendar.MONTH)+1)+"/"+c.get(Calendar.YEAR));
+
+
+int mmst=c.get(Calendar.MONTH)+1;
+int md=mm-mmst;
+int ddst=c.get(Calendar.DATE);
+
+int ddd=(dd-ddst)+md*30;
+
+System.out.println("differ date="+ddd);
+System.out.println("requested date is:-"+dd+"/"+mm+"/"+yy);
+
+if(ddd>=60||ddd<1)
+{
+System.out.println("Not possible before 60 days or before current date:RenEnter new date");
+
+}
+else{
+System.out.println("VALID DATE...NOW CHECK THE VACANT BERTH");
+break;
+}
+}
+}
+}
